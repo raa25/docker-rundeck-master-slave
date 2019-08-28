@@ -1,0 +1,31 @@
+FROM ubuntu
+
+ENV PYTHONUNBUFFERED=1
+ENV PORT 8080
+ADD root /
+
+RUN \
+
+    apt-get --allow-unauthenticated -y update && \
+    apt-get --allow-unauthenticated -y install build-essential rsync openssh-client software-properties-common curl nano wget lsb-release apt-transport-https && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+    apt-get --allow-unauthenticated -y update && \
+    apt-get install -y docker-ce
+
+RUN apt-get -yqq update 
+RUN apt-get install -yqq python 
+RUN apt-get -yqq install python-pip
+RUN   pip install -r /requirements.txt
+
+RUN chmod +s /usr/sbin/useradd && \
+    chmod +s /usr/sbin/groupadd && \
+    chmod +s /usr/sbin/usermod && \
+    chmod +s /usr/bin/docker && \
+    chmod 777 /entrypoint.sh 
+
+HEALTHCHECK --interval=15s --timeout=5s --retries=5 CMD echo Hello world!
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+

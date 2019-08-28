@@ -1,0 +1,46 @@
+- defaultTab: summary
+  description: ''
+  executionEnabled: true
+  loglevel: INFO
+  name: rundeck_ansible_executer
+  nodeFilterEditable: false
+  nodefilters:
+    dispatch:
+      excludePrecedence: true
+      keepgoing: false
+      rankOrder: ascending
+      successOnEmptyNodeFilter: false
+      threadcount: '1'
+    filter: .*
+  nodesSelectedByDefault: true
+  options:
+  - enforced: true
+    name: target
+    required: true
+    values:
+    - test
+    - development
+  - name: repo
+    value: git@gitbla.bla
+  - name: ansible
+    value: ansible-playbook playbook.yml
+  - description: 'Master branch is default '
+    name: select_branch 
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - configuration:
+        debug: 'false'
+        detach: 'false'
+        env: |
+          vault=${option.vault}
+          repository=${option.repo}
+          ansible=${option.ansible}
+          ansible_args=" -i hosts -l $RD_OPTION_TARGET "
+        image: rundeck-slave
+        rm: 'true'
+      nodeStep: true
+      type: docker-run-workflow-step
+    keepgoing: false
+    strategy: node-first
+

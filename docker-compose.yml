@@ -1,0 +1,13 @@
+---
+version: '2'
+services:
+
+  rundeck:
+    restart: always
+    image: rundeck
+    environment:
+      - VIRTUAL_HOST=devrundeck.local.com
+      - SERVER_URL=http://devrundeck.local.com
+      - VIRTUAL_PORT=4440
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
