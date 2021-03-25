@@ -61,7 +61,7 @@ python-consul==1.1.0
 python-dateutil==2.7.5
 python-gilt==1.2.1
 pytz==2018.7
-PyYAML==3.13
+PyYAML==5.4
 requests==2.20.0
 requests-ntlm>=1.1.0
 scandir==1.9.0
