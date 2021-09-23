@@ -1,5 +1,5 @@
 # pyinit: python2
-ansible==2.8.0
+ansible==4.2.0
 ansible-lint==3.5.0
 anyconfig==0.9.7
 arrow==0.12.1
